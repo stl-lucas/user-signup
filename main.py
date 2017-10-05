@@ -24,28 +24,33 @@ def validate_user():
     verify_error = ''
     email_error = ''
 
-    if not username:
+    validation = True
+
+    if not username or len(username) < 3 or len(username) > 20 or ' ' in username:
         username_error = 'That is not a valid username.'
         username = ''
-        return render_template('user_validation.html', username_error=username_error, password_error=password_error, verify_error=verify_error, email_error=email_error, username=username, password=password, email=email)
+        validation = False
     
-    elif not password:
+    if not password or len(password) < 3 or len(password) > 20 or ' ' in password:
         password_error = 'That is not a valid password.'
         password = ''
-        return render_template('user_validation.html', username_error=username_error, password_error=password_error, verify_error=verify_error, email_error=email_error, username=username, password=password, email=email)
-	
-    elif password != verify:
+        validation = False
+
+    if not verify or password != verify:
         verify_error = 'The passswords you entered do not match.'
         verify = ''
-        return render_template('user_validation.html', username_error=username_error, password_error=password_error, verify_error=verify_error, email_error=email_error, username=username, password=password, email=email)
-	
-    elif not email:
+        validation = False
+
+    if len(email) < 3 and len(email) > 0 or len(email) > 20 or len(email) > 0 and '@' not in email and '.' not in email or ' ' in email:
         email_error = 'The email you entered is invalid.'
         email = ''
+        validation = False
+	
+    if validation is False:
         return render_template('user_validation.html', username_error=username_error, password_error=password_error, verify_error=verify_error, email_error=email_error, username=username, password=password, email=email)
 
     else:
-        return render_template('/validated_user.html')
+        return render_template('/validated_user.html', username=username)
 
 
 if __name__ == '__main__':	
