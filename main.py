@@ -41,7 +41,7 @@ def validate_user():
         verify = ''
         validation = False
 
-    if len(email) < 3 and len(email) > 0 or len(email) > 20 or len(email) > 0 and '@' not in email and '.' not in email or ' ' in email:
+    if len(email) < 3 and len(email) > 0 or len(email) > 20 or len(email) > 0 and '@' not in email or len(email) > 0 and "." not in email or ' ' in email:
         email_error = 'The email you entered is invalid.'
         email = ''
         validation = False
